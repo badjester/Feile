@@ -1,0 +1,17 @@
+program TMCLDemo;
+
+uses
+  Forms,
+  TMCLDemoMain in 'TMCLDemoMain.pas' {FormMain},
+  uComNames in 'uComNames.pas',
+  uFrmCommands in 'uFrmCommands.pas' {frmCommands: TFrame},
+  uHelp in 'uHelp.pas' {FormHelp};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFormMain, FormMain);
+  Application.CreateForm(TFormHelp, FormHelp);
+  Application.Run;
+end.
