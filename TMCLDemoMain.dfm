@@ -1,10 +1,11 @@
 object FormMain: TFormMain
   Left = 536
   Top = 190
+  Top = 157
   BorderStyle = bsSingle
   Caption = 'Feilentest alpha'
   ClientHeight = 734
-  ClientWidth = 1155
+  ClientWidth = 1127
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -35,7 +36,7 @@ object FormMain: TFormMain
   object StatusBar1: TStatusBar
     Left = 0
     Top = 715
-    Width = 1155
+    Width = 1127
     Height = 19
     Panels = <>
   end
@@ -109,7 +110,7 @@ object FormMain: TFormMain
         Left = 2
         Top = 15
         Width = 171
-        Height = 20
+        Height = 38
         Align = alClient
         Caption = ' TMCL Reply '
         TabOrder = 0
@@ -212,9 +213,9 @@ object FormMain: TFormMain
       end
       object sgdTMCL: TStringGrid
         Left = 2
-        Top = 35
+        Top = 53
         Width = 171
-        Height = 356
+        Height = 338
         Align = alBottom
         BorderStyle = bsNone
         ColCount = 2
@@ -362,7 +363,7 @@ object FormMain: TFormMain
   object Panel2: TPanel
     Left = 177
     Top = 0
-    Width = 978
+    Width = 950
     Height = 715
     Align = alClient
     Caption = 'Panel2'
@@ -370,7 +371,7 @@ object FormMain: TFormMain
     object JvChart1: TJvChart
       Left = 1
       Top = 540
-      Width = 671
+      Width = 643
       Height = 174
       Align = alClient
       AutoSize = True
@@ -411,13 +412,13 @@ object FormMain: TFormMain
     object Splitter1: TSplitter
       Left = 1
       Top = 537
-      Width = 976
+      Width = 948
       Height = 3
       Cursor = crVSplit
       Align = alTop
     end
     object Splitter2: TSplitter
-      Left = 974
+      Left = 946
       Top = 540
       Height = 174
       Align = alRight
@@ -425,13 +426,13 @@ object FormMain: TFormMain
     object GroupBox3: TGroupBox
       Left = 1
       Top = 1
-      Width = 976
+      Width = 948
       Height = 432
       Align = alTop
       Caption = 'Parameter'
       TabOrder = 0
       DesignSize = (
-        976
+        948
         432)
       object Label11: TLabel
         Left = 12
@@ -577,7 +578,7 @@ object FormMain: TFormMain
         TabOrder = 1
       end
       object Stop: TButton
-        Left = 874
+        Left = 846
         Top = 330
         Width = 89
         Height = 25
@@ -587,7 +588,7 @@ object FormMain: TFormMain
         OnClick = StopClick
       end
       object startButton: TButton
-        Left = 778
+        Left = 750
         Top = 330
         Width = 89
         Height = 25
@@ -711,7 +712,7 @@ object FormMain: TFormMain
         TabOrder = 13
       end
       object btnWerteSpeichern: TButton
-        Left = 776
+        Left = 748
         Top = 360
         Width = 187
         Height = 25
@@ -807,7 +808,7 @@ object FormMain: TFormMain
         TabOrder = 23
       end
       object btnLaser: TButton
-        Left = 776
+        Left = 748
         Top = 392
         Width = 185
         Height = 25
@@ -837,7 +838,7 @@ object FormMain: TFormMain
         Text = '000.00'
       end
       object cbxWarnton: TCheckBox
-        Left = 776
+        Left = 748
         Top = 304
         Width = 185
         Height = 17
@@ -847,30 +848,29 @@ object FormMain: TFormMain
         State = cbChecked
         TabOrder = 27
       end
-      object Button1: TButton
-        Left = 688
-        Top = 328
-        Width = 75
-        Height = 25
-        Caption = 'Button1'
-        TabOrder = 28
-        OnClick = Button1Click
-      end
       object test_CheckBox: TCheckBox
         Left = 616
         Top = 16
         Width = 113
         Height = 17
         Caption = 'Test Connection'
-        Checked = True
-        State = cbChecked
+        TabOrder = 28
+      end
+      object medtWinkel: TMaskEdit
+        Left = 104
+        Top = 120
+        Width = 143
+        Height = 21
+        EditMask = '990.99;1;_'
+        MaxLength = 6
         TabOrder = 29
+        Text = '000.00'
       end
     end
     object sgdDaten: TStringGrid
       Left = 1
       Top = 433
-      Width = 976
+      Width = 948
       Height = 104
       Align = alTop
       BorderStyle = bsNone
@@ -878,6 +878,7 @@ object FormMain: TFormMain
       DefaultRowHeight = 18
       FixedCols = 0
       RowCount = 2
+      ScrollBars = ssHorizontal
       TabOrder = 1
       OnDrawCell = sgdDatenDrawCell
       ColWidths = (
@@ -899,7 +900,7 @@ object FormMain: TFormMain
         64)
     end
     object Panel3: TPanel
-      Left = 672
+      Left = 644
       Top = 540
       Width = 302
       Height = 174
@@ -949,16 +950,6 @@ object FormMain: TFormMain
         OnDrawCell = sgdDatenDrawCell
       end
     end
-  end
-  object medtWinkel: TMaskEdit
-    Left = 288
-    Top = 120
-    Width = 143
-    Height = 21
-    EditMask = '990.99;1;_'
-    MaxLength = 6
-    TabOrder = 3
-    Text = '000.00'
   end
   object Comm32: TComm32
     DeviceName = 'COM2'
@@ -1016,6 +1007,9 @@ object FormMain: TFormMain
     Top = 41
   end
   object SaveDlgDaten: TSaveDialog
+    DefaultExt = 'csv'
+    FileName = 'Feilendaten'
+    Filter = 'csv|*.csv'
     Left = 138
     Top = 65
   end
