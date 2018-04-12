@@ -522,10 +522,10 @@ var
   if not SendTMCLAndWait(1, 3, 0, 0, 0, true)
     then MessageDlg('No reply from the module!', mtError, [mbOK], 0);
 
-  //MediaPlayer1.Open;
-  ////MediaPlayer1.Wait := true;
-  //MediaPlayer1.Play;
-  //MediaPlayer1.Close;
+  MediaPlayer1.Open;
+  //MediaPlayer1.Wait := true;
+  MediaPlayer1.Play;
+  MediaPlayer1.Close;
   
   // WriteAllDigital schaltet den Output auf 1 = Output 1; 2 = Output 2; 4 = Output 3; 8 = Output 4; 16 = Output 5 (ggf addieren)...
   if cbxWarnton.Checked then
