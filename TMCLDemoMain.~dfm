@@ -838,7 +838,7 @@ object FormMain: TFormMain
       end
       object cbxWarnton: TCheckBox
         Left = 748
-        Top = 288
+        Top = 304
         Width = 185
         Height = 17
         Anchors = [akRight, akBottom]
@@ -847,13 +847,22 @@ object FormMain: TFormMain
         State = cbChecked
         TabOrder = 27
       end
+      object Button1: TButton
+        Left = 688
+        Top = 328
+        Width = 75
+        Height = 25
+        Caption = 'Button1'
+        TabOrder = 28
+        OnClick = Button1Click
+      end
       object test_CheckBox: TCheckBox
         Left = 616
         Top = 16
         Width = 113
         Height = 17
         Caption = 'Test Connection'
-        TabOrder = 28
+        TabOrder = 29
       end
       object medtWinkel: TMaskEdit
         Left = 104
@@ -862,19 +871,8 @@ object FormMain: TFormMain
         Height = 21
         EditMask = '990.99;1;_'
         MaxLength = 6
-        TabOrder = 29
-        Text = '000.00'
-      end
-      object cbxWarntonTimer: TCheckBox
-        Left = 748
-        Top = 312
-        Width = 185
-        Height = 17
-        Anchors = [akRight, akBottom]
-        Caption = 'Warnton automatisch Abschalten'
-        Checked = True
-        State = cbChecked
         TabOrder = 30
+        Text = '000.00'
       end
     end
     object sgdDaten: TStringGrid

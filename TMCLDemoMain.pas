@@ -121,7 +121,6 @@ type
     cbxWarnton: TCheckBox;
     SaveDlgDetails: TSaveDialog;
     test_CheckBox: TCheckBox;
-    cbxWarntonTimer: TCheckBox;
 
 
     procedure BtnOpenClick(Sender: TObject);
@@ -531,15 +530,12 @@ var
   // WriteAllDigital schaltet den Output auf 1 = Output 1; 2 = Output 2; 4 = Output 3; 8 = Output 4; 16 = Output 5 (ggf addieren)...
   if cbxWarnton.Checked then
     if not DisableOtherFunctionCall then WriteAllDigital(4);
-	MessageDlg('Feile gebrochen nach '+inttostr(count)+ ' Durchläufen.', mtError, [mbOK], 0);
+  MessageDlg('Feile gebrochen nach '+inttostr(count)+ ' Durchläufen.', mtError, [mbOK], 0);
   
-	if cbxWarntonTimer.Checked then
-		begin
-			t1:=GetTickCount;
-			while(Abs(GetTickCount-t1)<3000) do ;
-			if not DisableOtherFunctionCall then WriteAllDigital(0);
-		end;
-		
+  	t1:=GetTickCount;
+	while(Abs(GetTickCount-t1)<3000) do ;
+	if not DisableOtherFunctionCall then WriteAllDigital(0);
+  
   if TRUE then
     begin
       // Nach dem Bestätigen des OK Buttons Alarmton ausschalten
