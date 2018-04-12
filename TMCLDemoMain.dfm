@@ -838,7 +838,7 @@ object FormMain: TFormMain
       end
       object cbxWarnton: TCheckBox
         Left = 748
-        Top = 304
+        Top = 280
         Width = 185
         Height = 17
         Anchors = [akRight, akBottom]
@@ -864,6 +864,17 @@ object FormMain: TFormMain
         MaxLength = 6
         TabOrder = 29
         Text = '000.00'
+      end
+      object cbxWarntonTimer: TCheckBox
+        Left = 748
+        Top = 304
+        Width = 185
+        Height = 17
+        Anchors = [akRight, akBottom]
+        Caption = 'Warnton automatisch Abschalten'
+        Checked = True
+        State = cbChecked
+        TabOrder = 30
       end
     end
     object sgdDaten: TStringGrid
