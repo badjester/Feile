@@ -533,12 +533,12 @@ var
     if not DisableOtherFunctionCall then WriteAllDigital(4);
 	MessageDlg('Feile gebrochen nach '+inttostr(count)+ ' Durchläufen.', mtError, [mbOK], 0);
   
-	if cbxWarntonTimer.Checked then
-		begin
-			t1:=GetTickCount;
-			while(Abs(GetTickCount-t1)<3000) do ;
-			if not DisableOtherFunctionCall then WriteAllDigital(0);
-		end;
+	//if cbxWarntonTimer.Checked then
+		//begin
+		//	t1:=GetTickCount;
+		 //	while(Abs(GetTickCount-t1)<3000) do ;
+		 //	if not DisableOtherFunctionCall then WriteAllDigital(0);
+	 //	end;
 		
   if TRUE then
     begin
