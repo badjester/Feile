@@ -119,6 +119,7 @@ type
     medtTemperatur: TMaskEdit;
     Label21: TLabel;
     cbxWarnton: TCheckBox;
+    Button1: TButton;
     SaveDlgDetails: TSaveDialog;
     test_CheckBox: TCheckBox;
 
@@ -150,7 +151,7 @@ type
     procedure cbxRechtsClick(Sender: TObject);
     procedure cbxLinksClick(Sender: TObject);
     procedure btnLaserAusClick(Sender: TObject);
-
+    procedure Button1Click(Sender: TObject);
 
 
   public
@@ -315,11 +316,9 @@ end;
 
 //Button "Open"
 procedure TFormMain.BtnOpenClick(Sender: TObject);
-
-
 begin
 
-  // Simulate connection to COM Port
+  // Simulate connetion to COM Port
   if test_CheckBox.Checked then
     begin
       startButton.Enabled := TRUE;
@@ -381,7 +380,7 @@ var
   richtung_int: integer;
   fehler: boolean;
   Data1, Data2: longint;
-  t1: cardinal;
+
   begin
 
   startButton.Enabled := FALSE;
@@ -526,21 +525,14 @@ var
   //MediaPlayer1.Wait := true;
   MediaPlayer1.Play;
   MediaPlayer1.Close;
-  
   // WriteAllDigital schaltet den Output auf 1 = Output 1; 2 = Output 2; 4 = Output 3; 8 = Output 4; 16 = Output 5 (ggf addieren)...
   if cbxWarnton.Checked then
     if not DisableOtherFunctionCall then WriteAllDigital(4);
   MessageDlg('Feile gebrochen nach '+inttostr(count)+ ' Durchläufen.', mtError, [mbOK], 0);
-  
-  	t1:=GetTickCount;
-	while(Abs(GetTickCount-t1)<3000) do ;
-	if not DisableOtherFunctionCall then WriteAllDigital(0);
-  
   if TRUE then
     begin
       // Nach dem Bestätigen des OK Buttons Alarmton ausschalten
       if not DisableOtherFunctionCall then WriteAllDigital(0);
-	  
       sgdDaten.Cells[0,sgdDaten.RowCount-1] := cbxFeile.Text;
       sgdDaten.Cells[1,sgdDaten.RowCount-1] := cbxISO.Text;
       sgdDaten.Cells[2,sgdDaten.RowCount-1] := medtLaenge.Text;
@@ -557,7 +549,7 @@ var
       sgdDaten.Cells[13,sgdDaten.RowCount-1] := TimeToStr(Time);
       sgdDaten.Cells[14,sgdDaten.RowCount-1] := medtTemperatur.Text;
       sgdDaten.Cells[15,sgdDaten.RowCount-1] := medtTiefe.Text;
-      //Je nach Auswahl den Modus eintragen
+      //Je Nnach Auswahl den Modus eintragen
       if cbxRechts.Checked then
         sgdDaten.Cells[11,sgdDaten.RowCount-1] := '1'
       else if cbxLinks.Checked then
@@ -721,7 +713,6 @@ procedure TFormMain.FormResize(Sender: TObject);
 var
   SpaltenBreite: integer;
 begin
-
   SpaltenBreite := Floor((sgdDaten.Width-16)/9)-1;
   sgdDaten.DefaultColWidth := SpaltenBreite;
   sgdDaten.ColWidths[0] := 3 * SpaltenBreite - 80;
@@ -815,32 +806,16 @@ end;
 
 procedure TFormMain.btnWerteSpeichernClick(Sender: TObject);
 begin
+  sgdDaten.Cells[0,sgdDaten.RowCount-1] := cbxFeile.Text;
+  sgdDaten.Cells[1,sgdDaten.RowCount-1] := cbxISO.Text;
+  sgdDaten.Cells[2,sgdDaten.RowCount-1] := medtLaenge.Text;
+  sgdDaten.Cells[3,sgdDaten.RowCount-1] := medtKraft.Text;
+  sgdDaten.Cells[4,sgdDaten.RowCount-1] := inttostr(count);
+  sgdDaten.Cells[5,sgdDaten.RowCount-1] := speed.Text;
+  sgdDaten.Cells[6,sgdDaten.RowCount-1] := medtWinkel.Text;
 
-   sgdDaten.Cells[0,sgdDaten.RowCount-1] := cbxFeile.Text;
-      sgdDaten.Cells[1,sgdDaten.RowCount-1] := cbxISO.Text;
-      sgdDaten.Cells[2,sgdDaten.RowCount-1] := medtLaenge.Text;
-      sgdDaten.Cells[3,sgdDaten.RowCount-1] := medtKraft.Text;
-      sgdDaten.Cells[4,sgdDaten.RowCount-1] := inttostr(count);
-      sgdDaten.Cells[5,sgdDaten.RowCount-1] := speed.Text;
-      sgdDaten.Cells[6,sgdDaten.RowCount-1] := medtWinkel.Text;
-      sgdDaten.Cells[7,sgdDaten.RowCount-1] := spinSteri.Text;
-      sgdDaten.Cells[8,sgdDaten.RowCount-1] := stxtPosition.Caption;
-      sgdDaten.Cells[9,sgdDaten.RowCount-1] := inttostr(rightSpin.Value);
-      sgdDaten.Cells[10,sgdDaten.RowCount-1] := inttostr(leftSpin.Value);
-      // Spalte 11 siehe weiter unten
-      sgdDaten.Cells[12,sgdDaten.RowCount-1] := DateToStr(Date);
-      sgdDaten.Cells[13,sgdDaten.RowCount-1] := TimeToStr(Time);
-      sgdDaten.Cells[14,sgdDaten.RowCount-1] := medtTemperatur.Text;
-      sgdDaten.Cells[15,sgdDaten.RowCount-1] := medtTiefe.Text;
-      //Je nach Auswahl den Modus eintragen
-      if cbxRechts.Checked then
-        sgdDaten.Cells[11,sgdDaten.RowCount-1] := '1'
-      else if cbxLinks.Checked then
-        sgdDaten.Cells[11,sgdDaten.RowCount-1] := '0'
-      else
-        sgdDaten.Cells[11,sgdDaten.RowCount-1] := '2';
-
-		sgdDaten.RowCount := sgdDaten.RowCount + 1;
+  sgdDaten.Cells[7,sgdDaten.RowCount-1] := spinSteri.Text;
+  sgdDaten.RowCount := sgdDaten.RowCount + 1;
 end;
 
 procedure TFormMain.sgdDatenDrawCell(Sender: TObject; ACol, ARow: Integer;
@@ -902,8 +877,8 @@ begin
   try
     If SaveDlgDaten.Execute Then
     Begin
-      //F.Add(IntToStr(sgdDaten.RowCount));
-      //F.Add(IntToStr(sgdDaten.ColCount));
+      F.Add(IntToStr(sgdDaten.RowCount));
+      F.Add(IntToStr(sgdDaten.ColCount));
       for i := 0 to (sgdDaten.RowCount - 1) do
         F.Add(sgdDaten.Rows[i].CommaText);
       DatenFileName := SaveDlgDaten.FileName;
@@ -957,6 +932,27 @@ procedure TFormMain.btnLaserAusClick(Sender: TObject);
 begin
   // WriteAllDigital schaltet den Output auf 1 = Output 1; 2 = Output 2; 4 = Output 3; 8 = Output 4; 16 = Output 5 (ggf addieren)...
   if not DisableOtherFunctionCall then WriteAllDigital(0);
+end;
+
+procedure TFormMain.Button1Click(Sender: TObject);
+var
+  F: TStringList;
+  i: Integer;
+begin
+  F := TStringList.Create;
+  try
+    If SaveDlgDetails.Execute Then
+    Begin
+      F.Add(IntToStr(sgdDetails.RowCount));
+      F.Add(IntToStr(sgdDetails.ColCount));
+      for i := 0 to (sgdDetails.RowCount - 1) do
+        F.Add(sgdDetails.Rows[i].CommaText);
+      DatenFileName := SaveDlgDetails.FileName;
+      F.SaveToFile(DatenFileName);
+    End;
+  finally
+    F.Free;
+  end;
 end;
 
 end
