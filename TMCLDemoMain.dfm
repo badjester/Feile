@@ -1,5 +1,6 @@
 object FormMain: TFormMain
-  Left = 673
+  Left = 536
+  Top = 190
   Top = 157
   BorderStyle = bsSingle
   Caption = 'Feilentest alpha'
