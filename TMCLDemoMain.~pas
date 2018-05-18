@@ -40,7 +40,7 @@ type
     lblLinks: TLabel;
     lblRechts: TLabel;
     speed: TSpinEdit;
-    Label11: TLabel;
+    speed_label: TLabel;
     startButton: TButton;
     Stop: TButton;
     Label12: TLabel;
@@ -103,7 +103,6 @@ type
     Splitter2: TSplitter;
     cbxRechts: TCheckBox;
     cbxLinks: TCheckBox;
-    MediaPlayer1: TMediaPlayer;
     Panel3: TPanel;
     sgdDetails: TStringGrid;
     Label9: TLabel;
@@ -122,7 +121,14 @@ type
     SaveDlgDetails: TSaveDialog;
     test_CheckBox: TCheckBox;
     cbxWarntonTimer: TCheckBox;
-
+    resetTmcl: TButton;
+    reziprok_checkbox: TCheckBox;
+    movement_groupbox: TGroupBox;
+    directionHint_label: TLabel;
+    directionHint_label2: TLabel;
+    directionHint_label3: TLabel;
+    speedhint_label: TLabel;
+    stxtMicrosteps: TStaticText;
 
     procedure BtnOpenClick(Sender: TObject);
     procedure BtnCloseClick(Sender: TObject);
@@ -141,6 +147,7 @@ type
     procedure btnFeileNeuClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure tmrMessungTimer(Sender: TObject);
+    procedure updateGraph(position: Integer);
     procedure btnWerteSpeichernClick(Sender: TObject);
     procedure sgdDatenDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
@@ -151,9 +158,11 @@ type
     procedure cbxRechtsClick(Sender: TObject);
     procedure cbxLinksClick(Sender: TObject);
     procedure btnLaserAusClick(Sender: TObject);
+    procedure resetTmclClick(Sender: TObject);
+    procedure reziprok_checkboxClick(Sender: TObject);
 
 
-
+// Globale Variablen
   public
     TMCLReply: array[0..8] of byte;
     Messgrenze: integer;
@@ -166,10 +175,15 @@ type
     n:longint;
     DisableOtherFunctionCall,xxx:boolean;
     DatenFileName: TFileName;
+
     function SendTMCLAndWait(Addr:byte; Cmd:byte; TMCLType: byte; TMCLMotor:byte;
                 Value: integer; Wait: boolean):boolean;
+
     function SendTMCLWaitResponse(Addr:byte; Cmd:byte; TMCLType: byte; TMCLMotor:byte;
                 Value: integer; Wait: boolean): Integer;
+
+    function OpenComDevice(comDevice: ShortString) : boolean;
+
   end;
 
 var
@@ -198,7 +212,8 @@ function ReadAllDigital: Longint; stdcall; external 'K8055d.dll';
 function ReadCounter(CounterNr: Longint): Longint; stdcall; external 'K8055d.dll';
 procedure ResetCounter(CounterNr: Longint); stdcall; external 'K8055d.dll';
 procedure SetCounterDebounceTime(CounterNr, DebounceTime:Longint); stdcall; external 'K8055d.dll';
-//Send a TMCL command
+
+//Send a TMCL command               
 //Parameters: Addr: Address of the module
 //            Cmd: TMCL command code
 //            TMCLType: "Type" field of the TMCL command
@@ -301,22 +316,31 @@ begin
     StaticStatus.Caption:=IntToStr(TMCLReply[2]);
     StaticCmd.Caption:=IntToStr(TMCLReply[3]);
     // In StaticDefault kommt der aktuelle Wert des aufgerufenen Commands
-    StaticDefault.Caption:=IntToStr((TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8)
-                           or TMCLReply[7]);
+    StaticDefault.Caption:=IntToStr((TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8) or TMCLReply[7]);
+
+
+
     // In StaticValue kommen nur noch die Werte für die Position, damit es bei der Berechnung der Durchläufe keine Fehler gibt.
     if (TMCLReply[3] = 6) then
-        StaticValue.Caption:=IntToStr((TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8)
-                           or TMCLReply[7]);
+    begin
+        StaticValue.Caption:=IntToStr((TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8) or TMCLReply[7]);
+    
+    if not strtoint(StaticValue.Caption) = 0 then
+        stxtPosition.Caption := inttostr(round(0.1125 * strtoint(StaticValue.Caption)));
+        stxtMicrosteps.Caption := StaticValue.Caption;
+        updateGraph(strtoint(stxtPosition.Caption));
+      end;
+    end;
 
     if ((TMCLReply[3] > 0) AND (TMCLReply[3] < 10)) then
-      sgdTMCL.Cells[1,TMCLReply[3]] := IntToStr((TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8)
-                                            or TMCLReply[7]);
+      sgdTMCL.Cells[1,TMCLReply[3]] := IntToStr((TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8) or TMCLReply[7]);
   end;
 end;
 
+//---------------------------------------------------------------------------------------
+
 //Button "Open"
 procedure TFormMain.BtnOpenClick(Sender: TObject);
-
 
 begin
 
@@ -346,12 +370,43 @@ begin
      SendTMCLWaitResponse(1,6,4,0,0,true);
      SendTMCLAndWait(1,5,140,0,4,true);
      SendTMCLWaitResponse(1,6,154,0,0,true);
-     speed.Value :=(TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8)
-                           or TMCLReply[7];
+     //speed.Value :=(TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8) or TMCLReply[7];
 
      startButton.Enabled := TRUE;
   end else MessageDlg('Could not open port '+CbCOM.Text+'!', mtError, [mbOK], 0);
 end;
+
+//---------------------------------------------------------------------------------------
+
+
+function TFormMain.OpenComDevice(comDevice: ShortString) : boolean;
+begin
+
+   //Select and open the COM port. It is important that the "FlowControl" field of the
+  //Comm32 object is set to "fcNone" (using the object inspector) or fcRTSToggle
+  //when RS485 is used.
+  //Sending and receiving might not work if the flow control is set to any other option.
+  Comm32.DeviceName:=TrimRight(LeftStr(comDevice,Pos('|',comDevice)-1));
+  Comm32.Open;
+  if Comm32.Enabled then    
+  begin
+    BtnOpen.Enabled:=false;
+    CbCOM.Enabled:=false;
+    BtnClose.Enabled:=true;
+
+
+     SendTMCLWaitResponse(1,6,4,0,0,true);
+     SendTMCLAndWait(1,5,140,0,4,true);
+     SendTMCLWaitResponse(1,6,154,0,0,true);
+     //speed.Value :=(TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8) or TMCLReply[7];
+
+     //startButton.Enabled := TRUE;
+     Result:=TRUE;
+  end else Result:=FALSE;
+end;
+
+
+//---------------------------------------------------------------------------------------
 
 //Button "Close"
 procedure TFormMain.BtnCloseClick(Sender: TObject);
@@ -473,12 +528,20 @@ var
     begin
       if not SendTMCLAndWait(1, 2, 0, 0, velocity, true)
         then MessageDlg('No reply from the module!', mtError, [mbOK], 0);
+
       repeat
+
         Application.ProcessMessages;
         SendTMCLWaitResponse(1, 6, 1, 0, 0, true);
-        stxtPosition.Caption := inttostr(round(0.1125*strtoint(StaticValue.Caption)));
-        count := -round(strtoint(stxtPosition.Caption) / 360);
+
+        // StaticValue.Caption = Absolute zurückgelegte Microsteps (vom Motor aus: links = positiv, rechts = negativ)
+        // 0.1125 = 360 / 3200 (Grad pro Microstep)
+        stxtPosition.Caption := inttostr(round(0.1125 * strtoint(StaticValue.Caption)));
+        stxtMicrosteps.Caption := StaticValue.Caption;
+
+        count := -round( (strtoint(stxtPosition.Caption) / 360) + 0.5);
         counter.Caption := inttostr(count);
+
       until running = FALSE;
     end
   else if cbxLinks.Checked then
@@ -490,33 +553,78 @@ var
         Application.ProcessMessages;
         SendTMCLWaitResponse(1, 6, 1, 0, 0, true);
         stxtPosition.Caption := inttostr(round(0.1125*strtoint(StaticValue.Caption)));
-        count := round(strtoint(stxtPosition.Caption) / 360);
+        stxtMicrosteps.Caption := StaticValue.Caption;
+        count := round((strtoint(stxtPosition.Caption) / 360) - 0.5);
         counter.Caption := inttostr(count);
       until running = FALSE;
     end
   else if ((cbxLinks.Checked = FALSE) AND (cbxRechts.Checked = FALSE)) then
     begin
-      repeat
-        if richtung then richtung_int := 1 else richtung_int := -1;
-        // Cmd 4 = MoveToPosition (MVP); Type 1 = REL; Neue Zielposition zuweisen
-        SendTMCLAndWait(1, 4, 1, 0, richtung_int*(pos_rechts - ord(first)*pos_links), false);
+
+      if reziprok_checkbox.Checked = FALSE then
+
         repeat
-            Application.ProcessMessages;
-            // Cmd 6 = Get Axis Parameter, werden in die StaticValue.Caption geschrieben
-            SendTMCLWaitResponse(1, 6, 1, 0, 0, true);
-            // StaticValue auslesen und in Übersichtsmaske (stxtPosition) einblenden
-            stxtPosition.Caption := inttostr(round(0.1125*strtoint(StaticValue.Caption)));
-            // Cmd 6 = Get Axis Parameter; Type 8 = target pos. reached
-            SendTMCLAndWait(1, 6, 8, 0, 0, true);
-            // StaticValue auslesen, bei 1 ist die Zielposition erreicht, sonst weiterfahren
-            // running ist false, wenn keine Strom mehr über die Feile fließt
-        until (strtoint(StaticDefault.Caption)=1) or (running=false);
-        first := true;
-        richtung := not richtung;
-        count:= count+1;
-        counter.Caption := inttostr(count);
-      until running = false;
-    end;
+          if richtung then richtung_int := 1 else richtung_int := -1;
+          // Cmd 4 = MoveToPosition (MVP); Type 1 = REL; Neue Zielposition zuweisen
+          SendTMCLAndWait(1, 4, 1, 0, richtung_int*(pos_rechts - ord(first)*pos_links), false);
+          repeat
+              Application.ProcessMessages;
+              // Cmd 6 = Get Axis Parameter, werden in die StaticValue.Caption geschrieben
+              SendTMCLWaitResponse(1, 6, 1, 0, 0, true);
+              // StaticValue auslesen und in Übersichtsmaske (stxtPosition) einblenden
+              stxtPosition.Caption := inttostr(round(0.1125*strtoint(StaticValue.Caption)));
+              stxtMicrosteps.Caption := StaticValue.Caption;
+              // Cmd 6 = Get Axis Parameter; Type 8 = target pos. reached
+              SendTMCLAndWait(1, 6, 8, 0, 0, true);
+              // StaticValue auslesen, bei 1 ist die Zielposition erreicht, sonst weiterfahren
+              // running ist false, wenn keine Strom mehr über die Feile fließt
+          until (strtoint(StaticDefault.Caption)=1) or (running=false);
+          first := true;
+          richtung := not richtung;
+          count:= count+1;
+          counter.Caption := inttostr(count);
+        until running = false
+
+        // Reziprok
+      else
+
+        repeat
+
+         // if richtung then richtung_int := 1 else richtung_int := -1;
+
+          // Cmd 4 = MoveToPosition (MVP); Type 1 = REL; Neue Zielposition zuweisen
+          //SendTMCLAndWait(1, 4, 1, 0, richtung_int*(pos_rechts - ord(first)*pos_links), false);
+          if richtung then
+            SendTMCLAndWait(1, 4, 1, 0, pos_rechts, false)
+          else
+            SendTMCLAndWait(1, 4, 1, 0, pos_links, false);
+
+          repeat
+              Application.ProcessMessages;
+              // Cmd 6 = Get Axis Parameter, werden in die StaticValue.Caption geschrieben
+              SendTMCLWaitResponse(1, 6, 1, 0, 0, true);
+              // StaticValue auslesen und in Übersichtsmaske (stxtPosition) einblenden
+              stxtPosition.Caption := inttostr(round(0.1125*strtoint(StaticValue.Caption)));
+              stxtMicrosteps.Caption := StaticValue.Caption;
+              // Cmd 6 = Get Axis Parameter; Type 8 = target pos. reached
+              SendTMCLAndWait(1, 6, 8, 0, 0, true);
+              // StaticValue auslesen, bei 1 ist die Zielposition erreicht, sonst weiterfahren
+              // running ist false, wenn keine Strom mehr über die Feile fließt
+          until (strtoint(StaticDefault.Caption)=1) or (running=false);
+
+          if (richtung = FALSE AND first = TRUE) then count:= count+1;
+
+          first := true;
+          richtung := not richtung;
+
+          
+
+          counter.Caption := inttostr(count);
+
+        until running = false;
+
+      end;
+
 
   //Maschinen auf jeden Fall stoppen, KONTROLLE warum nicht in der Schleife steht aus!!!
   running := FALSE;
@@ -531,15 +639,17 @@ var
   // WriteAllDigital schaltet den Output auf 1 = Output 1; 2 = Output 2; 4 = Output 3; 8 = Output 4; 16 = Output 5 (ggf addieren)...
   if cbxWarnton.Checked then
     if not DisableOtherFunctionCall then WriteAllDigital(4);
-	MessageDlg('Feile gebrochen nach '+inttostr(count)+ ' Durchläufen.', mtError, [mbOK], 0);
+	
   
 	if cbxWarntonTimer.Checked then
 		begin
 			t1:=GetTickCount;
-			while(Abs(GetTickCount-t1)<3000) do ;
-			if not DisableOtherFunctionCall then WriteAllDigital(0);
-		end;
+			while(Abs(GetTickCount-t1)<500) do ;
+		 	if not DisableOtherFunctionCall then WriteAllDigital(0);
+	 	end;
 		
+    MessageDlg('Feile gebrochen nach '+inttostr(count)+ ' Durchläufen.', mtError, [mbOK], 0);
+
   if TRUE then
     begin
       // Nach dem Bestätigen des OK Buttons Alarmton ausschalten
@@ -572,7 +682,7 @@ var
       sgdDaten.RowCount := sgdDaten.RowCount + 1;
     end;
   end;
-  startButton.Enabled := TRUE;
+  startButton.Enabled := TRUE;  
 
 end;
 
@@ -613,7 +723,7 @@ begin
 end;
 
 procedure TFormMain.Timer3Timer(Sender: TObject);
-var i, Data1, Data2: longint;
+var Data1, Data2: longint;
 begin
   timer3.enabled:=false;
   ReadAllAnalog(Data1,Data2);
@@ -627,7 +737,12 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 var
   i: integer;
+  h,CardAddr:longint;
+
 begin
+
+self.Left := 6;
+
   DoubleBuffered:=True;
   CbCOM.Items := GetComNames;
   CbCOM.ItemIndex := 0;
@@ -669,7 +784,56 @@ begin
   Messgrenze := 50;
   for i := 0 to 9 do
     Mittelwert[i] := Messgrenze;
-end;
+
+
+  CardAddr:= 3-(integer(sk5.Checked) + integer(sk6.Checked) * 2);
+  h:= OpenDevice(CardAddr);
+  case h of
+    0..3: begin
+            label12.caption:='Card '+ inttostr(h)+' connected';
+            if not DisableOtherFunctionCall then OutputAnalogChannel(2,255-TrackBar2.position);
+            Label14.caption:=inttostr(255-TrackBar2.position);
+          end;
+    -1: label12.caption:='Card '+ inttostr(CardAddr)+' not found';
+
+    
+  end;
+
+
+  // Richtigen Com Port finden. Testet von hinten nach vorne, da erster Com Port normalerweise nie das Gerät ist
+  for i:=0 to CbCOM.Items.Count-1 do begin
+    
+    if OpenComDevice(CbCOM.Items[CbCOM.Items.Count-1 -i]) then
+
+      BtnOpen.Enabled:=false;
+
+      SendTMCLWaitResponse(1,6,4,0,0,true);
+      SendTMCLAndWait(1,5,140,0,4,true);
+      SendTMCLWaitResponse(1,6,154,0,0,true);
+      //speed.Value :=(TMCLReply[4] shl 24) or (TMCLReply[5] shl 16) or (TMCLReply[6] shl 8) or TMCLReply[7];
+
+
+   SendTMCLWaitResponse(1, 6, 1, 0, 0, true);
+    stxtPosition.Caption := inttostr(round(0.1125 * strtoint(StaticValue.Caption)));
+    stxtMicrosteps.Caption := StaticValue.Caption;
+
+    SendTMCLAndWait(1, 6, 8, 0, 0, true);
+
+    updateGraph(strtoint(stxtPosition.Caption));
+
+
+      CbCOM.ItemIndex := CbCOM.Items.Count-1 -i;
+      startButton.Enabled := TRUE;
+      Break
+
+    end;
+
+updateGraph(strtoint(stxtPosition.Caption));
+
+
+  end;
+
+//---------------------------------------------------------------------------------------
 
 procedure TFormMain.btnLaserClick(Sender: TObject);
 begin
@@ -742,7 +906,7 @@ end;
 procedure TFormMain.tmrMessungTimer(Sender: TObject);
 var
   i, Data1, Data2, MW: longint;
-  canwidth, canheight, r, j, zeilenzahl: integer;
+  canwidth, canheight, j, zeilenzahl: integer;
 begin
   tmrMessung.enabled:=false;
   ReadAllAnalog(Data1,Data2);
@@ -792,30 +956,58 @@ begin
 
 canwidth := Image1.Width;
 canheight := Image1.Height;
-r := 3;
+
 Image1.Picture := nil;
 j := strtoint(stxtPosition.Caption);
-With Image1.Canvas do
-      Begin
-        MoveTo(round(canwidth/2),round(canheight/2));
-        //pen.color:=clnavy;
-        LineTo(round(canwidth/2+(canwidth/2-5)*-sin(DegToRad(j))),round(canheight/2+(canheight/2-5)*-cos(DegToRad(j))));
-        //pen.color:=clwhite;
-        //Brush.Color:=clwhite;
-        //Ellipse(round(canwidth/2+(canwidth/2-5)*cos(DegToRad(i-1)))-r,round(canheight/2+(canheight/2-5)*sin(DegToRad(i-1)))-r,round(canwidth/2+(canwidth/2-5)*cos(DegToRad(i-1)))+r,round(canheight/2+(canheight/2-5)*sin(DegToRad(i-1)))+r);
-        pen.color:=clblack;
-        Brush.Color:=clred;
-        //Ellipse(round(canwidth/2+(canwidth/2-5)*cos(DegToRad(j)))-r,round(canheight/2+(canheight/2-5)*sin(DegToRad(j)))-r,round(canwidth/2+(canwidth/2-5)*cos(DegToRad(j)))+r,round(canheight/2+(canheight/2-5)*sin(DegToRad(j)))+r);
-      end;
-  //StaticText2.Caption := inttostr(round(50+45*cos(DegToRad(i))));
-  //StaticText1.Caption := inttostr(round(50+45*sin(DegToRad(i))));
-  //StaticText3.Caption := inttostr(i);
-  //inc(i);
+
+updateGraph(j);
+
+// With Image1.Canvas do
+//       Begin
+//         MoveTo(round(canwidth/2),round(canheight/2));
+//         //pen.color:=clnavy;
+//         LineTo(round(canwidth/2+(canwidth/2-5)*-sin(DegToRad(j))),round(canheight/2+(canheight/2-5)*-cos(DegToRad(j))));
+//         //pen.color:=clwhite;
+//         //Brush.Color:=clwhite;
+//         //Ellipse(round(canwidth/2+(canwidth/2-5)*cos(DegToRad(i-1)))-r,round(canheight/2+(canheight/2-5)*sin(DegToRad(i-1)))-r,round(canwidth/2+(canwidth/2-5)*cos(DegToRad(i-1)))+r,round(canheight/2+(canheight/2-5)*sin(DegToRad(i-1)))+r);
+//         pen.color:=clblack;
+//         Brush.Color:=clred;
+//         //Ellipse(round(canwidth/2+(canwidth/2-5)*cos(DegToRad(j)))-r,round(canheight/2+(canheight/2-5)*sin(DegToRad(j)))-r,round(canwidth/2+(canwidth/2-5)*cos(DegToRad(j)))+r,round(canheight/2+(canheight/2-5)*sin(DegToRad(j)))+r);
+//       end;
+//   //StaticText2.Caption := inttostr(round(50+45*cos(DegToRad(i))));
+//   //StaticText1.Caption := inttostr(round(50+45*sin(DegToRad(i))));
+//   //StaticText3.Caption := inttostr(i);
+//   //inc(i);
 
   stxtMW.Caption := inttostr(MW);
   //tmrMessung.enabled:=true;
 
 end;
+
+//---------------------------------------------------------------------------------------
+
+procedure TFormMain.updateGraph(position: Integer);
+
+var
+  canwidth, canheight: integer;
+
+begin
+
+canwidth := Image1.Width;
+canheight := Image1.Height;
+Image1.Picture := nil;
+
+With Image1.Canvas do
+      Begin
+        MoveTo(round(canwidth/2),round(canheight/2));
+        LineTo(round(canwidth/2+(canwidth/2-5)*-sin(DegToRad(position))),round(canheight/2+(canheight/2-5)*-cos(DegToRad(position))));
+        pen.color:=clblack;
+        Brush.Color:=clred;
+      end;
+
+end;
+
+//---------------------------------------------------------------------------------------
 
 procedure TFormMain.btnWerteSpeichernClick(Sender: TObject);
 begin
@@ -927,14 +1119,16 @@ begin
        cbxLinks.Checked := FALSE;
        cbxLinks.Enabled := FALSE;
        rightSpin.Enabled := FALSE;
-       leftSpin.Enabled := FALSE
+       leftSpin.Enabled := FALSE;
+       reziprok_checkbox.Enabled := FALSE;
     end
   else
     begin
        //Wenn Dauerrechts angeklickt wird, werden die anderen Felder ausgegraut
        cbxLinks.Enabled := TRUE;
        rightSpin.Enabled := TRUE;
-       leftSpin.Enabled := TRUE
+       leftSpin.Enabled := TRUE;
+       reziprok_checkbox.Enabled := TRUE;
     end;
 end;
 
@@ -946,14 +1140,16 @@ begin
        cbxRechts.Checked := FALSE;
        cbxRechts.Enabled := FALSE;
        rightSpin.Enabled := FALSE;
-       leftSpin.Enabled := FALSE
+       leftSpin.Enabled := FALSE;
+       reziprok_checkbox.Enabled := FALSE;
     end
   else
     begin
        //Wenn Dauerrechts angeklickt wird, werden die anderen Felder ausgegraut
        cbxRechts.Enabled := TRUE;
        rightSpin.Enabled := TRUE;
-       leftSpin.Enabled := TRUE
+       leftSpin.Enabled := TRUE;
+       reziprok_checkbox.Enabled := TRUE;
     end;
 end;
 
@@ -961,6 +1157,46 @@ procedure TFormMain.btnLaserAusClick(Sender: TObject);
 begin
   // WriteAllDigital schaltet den Output auf 1 = Output 1; 2 = Output 2; 4 = Output 3; 8 = Output 4; 16 = Output 5 (ggf addieren)...
   if not DisableOtherFunctionCall then WriteAllDigital(0);
+end;
+
+procedure TFormMain.resetTmclClick(Sender: TObject);
+begin
+
+    if not SendTMCLAndWait(1, 5, 4, 0, 2047, true)
+      then MessageDlg('No reply from the module!', mtError, [mbOK], 0);
+    // Fahrt auf ABS POS 0
+    if not SendTMCLAndWait(1, 4, 0, 0, 0, true)
+      then MessageDlg('No reply from the module!', mtError, [mbOK], 0);
+
+
+    SendTMCLWaitResponse(1, 6, 1, 0, 0, true);
+    stxtPosition.Caption := inttostr(round(0.1125 * strtoint(StaticValue.Caption)));
+    stxtMicrosteps.Caption := StaticValue.Caption;
+
+    SendTMCLAndWait(1, 6, 8, 0, 0, true);
+
+    updateGraph(strtoint(stxtPosition.Caption));
+
+end;
+
+procedure TFormMain.reziprok_checkboxClick(Sender: TObject);
+
+begin
+
+  if reziprok_checkbox.Checked then
+    begin
+      cbxLinks.Checked := FALSE;
+      cbxLinks.Enabled := FALSE;
+      cbxRechts.Checked := FALSE;
+      cbxRechts.Enabled := FALSE;      
+    end
+  else
+    begin
+      cbxLinks.Enabled := TRUE;
+      cbxRechts.Enabled := TRUE;
+    end;
+
+
 end;
 
 end

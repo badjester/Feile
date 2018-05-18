@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 673
-  Top = 157
+  Left = 670
+  Top = 154
   BorderStyle = bsSingle
   Caption = 'Feilentest alpha'
   ClientHeight = 734
@@ -13,7 +13,7 @@ object FormMain: TFormMain
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnResize = FormResize
   PixelsPerInch = 96
@@ -38,6 +38,741 @@ object FormMain: TFormMain
     Width = 1127
     Height = 19
     Panels = <>
+  end
+  object Panel2: TPanel
+    Left = 177
+    Top = 0
+    Width = 950
+    Height = 715
+    Align = alClient
+    Caption = 'Panel2'
+    TabOrder = 2
+    object JvChart1: TJvChart
+      Left = 1
+      Top = 632
+      Width = 643
+      Height = 82
+      AutoSize = True
+      Visible = False
+      Options.XAxisValuesPerDivision = 0
+      Options.XAxisLabelAlignment = taLeftJustify
+      Options.XAxisDateTimeMode = False
+      Options.XOrigin = 0
+      Options.YOrigin = 0
+      Options.MarkerSize = 1
+      Options.PrimaryYAxis.YMax = 10.000000000000000000
+      Options.PrimaryYAxis.YLegendDecimalPlaces = 0
+      Options.SecondaryYAxis.YMax = 10.000000000000000000
+      Options.SecondaryYAxis.YLegendDecimalPlaces = 0
+      Options.MouseEdit = False
+      Options.MouseDragObjects = False
+      Options.LegendRowCount = 0
+      Options.AxisLineWidth = 1
+      Options.HeaderFont.Charset = DEFAULT_CHARSET
+      Options.HeaderFont.Color = clWindowText
+      Options.HeaderFont.Height = -11
+      Options.HeaderFont.Name = 'MS Sans Serif'
+      Options.HeaderFont.Style = []
+      Options.LegendFont.Charset = DEFAULT_CHARSET
+      Options.LegendFont.Color = clWindowText
+      Options.LegendFont.Height = -11
+      Options.LegendFont.Name = 'MS Sans Serif'
+      Options.LegendFont.Style = []
+      Options.AxisFont.Charset = DEFAULT_CHARSET
+      Options.AxisFont.Color = clWindowText
+      Options.AxisFont.Height = -11
+      Options.AxisFont.Name = 'MS Sans Serif'
+      Options.AxisFont.Style = []
+      Options.PaperColor = clWhite
+      Options.AxisLineColor = clBlack
+      Options.CursorColor = clBlack
+      Options.CursorStyle = psSolid
+    end
+    object Splitter1: TSplitter
+      Left = 1
+      Top = 634
+      Width = 948
+      Height = 8
+      Align = alNone
+    end
+    object Splitter2: TSplitter
+      Left = 946
+      Top = 465
+      Height = 249
+      Align = alRight
+    end
+    object GroupBox3: TGroupBox
+      Left = 1
+      Top = 1
+      Width = 948
+      Height = 464
+      Align = alTop
+      Caption = 'Parameter'
+      TabOrder = 0
+      DesignSize = (
+        948
+        464)
+      object Label8: TLabel
+        Left = 380
+        Top = 252
+        Width = 105
+        Height = 13
+        Caption = 'Anzahl Durchl'#228'ufe'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label13: TLabel
+        Left = 64
+        Top = 24
+        Width = 22
+        Height = 13
+        Caption = 'Feile'
+      end
+      object Label15: TLabel
+        Left = 40
+        Top = 48
+        Width = 50
+        Height = 13
+        Caption = 'ISO Gr'#246#223'e'
+      end
+      object Label17: TLabel
+        Left = 56
+        Top = 72
+        Width = 30
+        Height = 13
+        Caption = 'L'#228'nge'
+      end
+      object lblMittelwert: TLabel
+        Left = 380
+        Top = 279
+        Width = 45
+        Height = 13
+        Caption = 'Mittelwert'
+      end
+      object lblKraft: TLabel
+        Left = 56
+        Top = 96
+        Width = 22
+        Height = 13
+        Caption = 'Kraft'
+      end
+      object lblSteri: TLabel
+        Left = 24
+        Top = 208
+        Width = 103
+        Height = 13
+        Caption = 'Sterilisationsvorg'#228'nge'
+      end
+      object lblGrenzwert: TLabel
+        Left = 380
+        Top = 402
+        Width = 48
+        Height = 13
+        Caption = 'Grenzwert'
+      end
+      object Image1: TImage
+        Left = 824
+        Top = 16
+        Width = 105
+        Height = 105
+      end
+      object lblPosition: TLabel
+        Left = 380
+        Top = 344
+        Width = 113
+        Height = 13
+        Caption = 'Absolute Position (Grad)'
+      end
+      object Label10: TLabel
+        Left = 380
+        Top = 322
+        Width = 78
+        Height = 13
+        Caption = 'Geschwindigkeit'
+      end
+      object Label18: TLabel
+        Left = 380
+        Top = 301
+        Width = 51
+        Height = 13
+        Caption = 'Microsteps'
+      end
+      object Label7: TLabel
+        Left = 24
+        Top = 120
+        Width = 69
+        Height = 13
+        Caption = 'Abscherwinkel'
+      end
+      object Label20: TLabel
+        Left = 24
+        Top = 152
+        Width = 64
+        Height = 13
+        Caption = 'Einspanntiefe'
+      end
+      object Label21: TLabel
+        Left = 24
+        Top = 168
+        Width = 54
+        Height = 13
+        Caption = 'Temperatur'
+      end
+      object absMicroSteps_label: TLabel
+        Left = 380
+        Top = 368
+        Width = 95
+        Height = 13
+        Caption = 'Absolute Microsteps'
+      end
+      object counter: TStaticText
+        Left = 514
+        Top = 250
+        Width = 11
+        Height = 17
+        BorderStyle = sbsSunken
+        Caption = '0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+      end
+      object ResetButton: TButton
+        Left = 312
+        Top = 122
+        Width = 113
+        Height = 21
+        Caption = 'Reset Counter'
+        Enabled = False
+        TabOrder = 1
+      end
+      object Stop: TButton
+        Left = 846
+        Top = 362
+        Width = 89
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = 'Stop'
+        TabOrder = 2
+        OnClick = StopClick
+      end
+      object startButton: TButton
+        Left = 750
+        Top = 362
+        Width = 89
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = 'Start'
+        TabOrder = 3
+        OnClick = startButtonClick
+      end
+      object cbxFeile: TComboBox
+        Left = 104
+        Top = 16
+        Width = 145
+        Height = 21
+        Enabled = False
+        ItemHeight = 13
+        TabOrder = 4
+        Text = '---'
+      end
+      object btnFeileLaden: TButton
+        Left = 312
+        Top = 16
+        Width = 65
+        Height = 21
+        Caption = 'laden ...'
+        TabOrder = 5
+        OnClick = btnFeileLadenClick
+      end
+      object btnFeileBearbeiten: TButton
+        Left = 384
+        Top = 16
+        Width = 81
+        Height = 21
+        Caption = 'bearbeiten ...'
+        Enabled = False
+        TabOrder = 6
+        OnClick = btnFeileBearbeitenClick
+      end
+      object btnFeileNeu: TButton
+        Left = 256
+        Top = 16
+        Width = 49
+        Height = 21
+        Caption = 'neu ...'
+        TabOrder = 7
+        OnClick = btnFeileNeuClick
+      end
+      object cbxISO: TComboBox
+        Left = 104
+        Top = 40
+        Width = 145
+        Height = 21
+        ItemHeight = 13
+        TabOrder = 8
+        Text = '---'
+        Items.Strings = (
+          '6'
+          '8'
+          '10'
+          '15'
+          '20'
+          '25'
+          '30'
+          '35'
+          '40'
+          '45'
+          '50'
+          '55'
+          '60'
+          '70'
+          '80'
+          '90'
+          '100')
+      end
+      object medtLaenge: TMaskEdit
+        Left = 104
+        Top = 64
+        Width = 143
+        Height = 21
+        EditMask = '990.99;1;_'
+        MaxLength = 6
+        TabOrder = 9
+        Text = '000.00'
+      end
+      object stxtMW: TStaticText
+        Left = 513
+        Top = 274
+        Width = 10
+        Height = 17
+        BorderStyle = sbsSunken
+        Caption = '0'
+        TabOrder = 10
+      end
+      object btnWerteSpeichern: TButton
+        Left = 748
+        Top = 392
+        Width = 187
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = 'Werte in Tabelle '#252'bernehmen'
+        TabOrder = 11
+        OnClick = btnWerteSpeichernClick
+      end
+      object stxtMSteps: TStaticText
+        Left = 513
+        Top = 295
+        Width = 10
+        Height = 17
+        BorderStyle = sbsSunken
+        Caption = '0'
+        TabOrder = 12
+      end
+      object stxtVelocity: TStaticText
+        Left = 513
+        Top = 317
+        Width = 10
+        Height = 17
+        BorderStyle = sbsSunken
+        Caption = '0'
+        TabOrder = 13
+      end
+      object medtKraft: TMaskEdit
+        Left = 104
+        Top = 88
+        Width = 143
+        Height = 21
+        EditMask = '990.99;1;_'
+        MaxLength = 6
+        TabOrder = 14
+        Text = '000.00'
+      end
+      object spinSteri: TSpinEdit
+        Left = 168
+        Top = 202
+        Width = 49
+        Height = 22
+        MaxValue = 0
+        MinValue = 0
+        TabOrder = 15
+        Value = 0
+      end
+      object sedtGrenzwert: TSpinEdit
+        Left = 498
+        Top = 399
+        Width = 49
+        Height = 22
+        MaxValue = 0
+        MinValue = 0
+        TabOrder = 16
+        Value = 50
+      end
+      object stxtPosition: TStaticText
+        Left = 513
+        Top = 341
+        Width = 10
+        Height = 17
+        BorderStyle = sbsSunken
+        Caption = '0'
+        TabOrder = 17
+      end
+      object btnLaser: TButton
+        Left = 748
+        Top = 424
+        Width = 185
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = 'LASER an'
+        TabOrder = 18
+        OnClick = btnLaserClick
+      end
+      object medtTiefe: TMaskEdit
+        Left = 104
+        Top = 144
+        Width = 143
+        Height = 21
+        EditMask = '990.99;1;_'
+        MaxLength = 6
+        TabOrder = 19
+        Text = '000.00'
+      end
+      object medtTemperatur: TMaskEdit
+        Left = 104
+        Top = 168
+        Width = 143
+        Height = 21
+        EditMask = '990.99;1;_'
+        MaxLength = 6
+        TabOrder = 20
+        Text = '000.00'
+      end
+      object cbxWarnton: TCheckBox
+        Left = 748
+        Top = 312
+        Width = 185
+        Height = 17
+        Anchors = [akRight, akBottom]
+        Caption = 'Warnton bei Feilenbruch'
+        Checked = True
+        State = cbChecked
+        TabOrder = 21
+      end
+      object test_CheckBox: TCheckBox
+        Left = 616
+        Top = 16
+        Width = 113
+        Height = 17
+        Caption = 'Test Connection'
+        TabOrder = 22
+      end
+      object medtWinkel: TMaskEdit
+        Left = 104
+        Top = 120
+        Width = 143
+        Height = 21
+        EditMask = '990.99;1;_'
+        MaxLength = 6
+        TabOrder = 23
+        Text = '000.00'
+      end
+      object cbxWarntonTimer: TCheckBox
+        Left = 748
+        Top = 336
+        Width = 185
+        Height = 17
+        Anchors = [akRight, akBottom]
+        Caption = 'Warnton automatisch Abschalten'
+        Checked = True
+        State = cbChecked
+        TabOrder = 24
+      end
+      object resetTmcl: TButton
+        Left = 624
+        Top = 200
+        Width = 121
+        Height = 33
+        Caption = 'Motor zur'#252'cksetzen'
+        TabOrder = 25
+        OnClick = resetTmclClick
+      end
+      object movement_groupbox: TGroupBox
+        Left = 24
+        Top = 240
+        Width = 313
+        Height = 209
+        Caption = 'Bewegungseinstellungen'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 26
+        object lblLinks: TLabel
+          Left = 20
+          Top = 63
+          Width = 89
+          Height = 13
+          Caption = 'Endrichtung (Grad)'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object speed_label: TLabel
+          Left = 21
+          Top = 175
+          Width = 78
+          Height = 13
+          Caption = 'Geschwindigkeit'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object lblRechts: TLabel
+          Left = 20
+          Top = 33
+          Width = 92
+          Height = 13
+          Caption = 'Startrichtung (Grad)'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object directionHint_label: TLabel
+          Left = 20
+          Top = 96
+          Width = 118
+          Height = 13
+          Caption = 'Vom Motor aus gesehen:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object directionHint_label2: TLabel
+          Left = 20
+          Top = 112
+          Width = 97
+          Height = 13
+          Caption = 'Negativ: Rechts rum'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object directionHint_label3: TLabel
+          Left = 20
+          Top = 128
+          Width = 82
+          Height = 13
+          Caption = 'Positiv: Links rum'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object speedhint_label: TLabel
+          Left = 189
+          Top = 175
+          Width = 107
+          Height = 13
+          Caption = 'In Umdrehungen / Min'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object reziprok_checkbox: TCheckBox
+          Left = 192
+          Top = 90
+          Width = 73
+          Height = 22
+          Caption = 'Reziprok'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          OnClick = reziprok_checkboxClick
+        end
+        object speed: TSpinEdit
+          Left = 120
+          Top = 172
+          Width = 59
+          Height = 22
+          MaxValue = 0
+          MinValue = 0
+          TabOrder = 1
+          Value = 0
+        end
+        object leftSpin: TSpinEdit
+          Left = 120
+          Top = 60
+          Width = 59
+          Height = 22
+          MaxValue = 0
+          MinValue = 0
+          TabOrder = 2
+          Value = 0
+        end
+        object rightSpin: TSpinEdit
+          Left = 120
+          Top = 30
+          Width = 59
+          Height = 22
+          MaxValue = 0
+          MinValue = 0
+          TabOrder = 3
+          Value = 0
+        end
+        object cbxLinks: TCheckBox
+          Left = 192
+          Top = 60
+          Width = 97
+          Height = 22
+          Caption = 'Dauerlauf links'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 4
+          OnClick = cbxLinksClick
+        end
+        object cbxRechts: TCheckBox
+          Left = 192
+          Top = 30
+          Width = 97
+          Height = 22
+          Caption = 'Dauerlauf rechts'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 5
+          OnClick = cbxRechtsClick
+        end
+      end
+      object stxtMicrosteps: TStaticText
+        Left = 513
+        Top = 365
+        Width = 10
+        Height = 17
+        BorderStyle = sbsSunken
+        Caption = '0'
+        TabOrder = 27
+      end
+    end
+    object sgdDaten: TStringGrid
+      Left = 1
+      Top = 472
+      Width = 948
+      Height = 161
+      BorderStyle = bsNone
+      ColCount = 16
+      DefaultRowHeight = 18
+      FixedCols = 0
+      RowCount = 2
+      ScrollBars = ssHorizontal
+      TabOrder = 1
+      OnDrawCell = sgdDatenDrawCell
+      ColWidths = (
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64)
+    end
+    object Panel3: TPanel
+      Left = 644
+      Top = 640
+      Width = 302
+      Height = 74
+      Caption = 'Panel3'
+      TabOrder = 2
+      object Memo1: TMemo
+        Left = 1
+        Top = 88
+        Width = 300
+        Height = 80
+        BevelInner = bvNone
+        BorderStyle = bsNone
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Courier New'
+        Font.Style = []
+        Lines.Strings = (
+          'Memo1')
+        ParentFont = False
+        TabOrder = 0
+      end
+      object sgdDetails: TStringGrid
+        Left = 1
+        Top = 88
+        Width = 300
+        Height = 251
+        BorderStyle = bsNone
+        ColCount = 7
+        DefaultColWidth = 50
+        DefaultRowHeight = 18
+        DragMode = dmAutomatic
+        FixedCols = 0
+        RowCount = 2
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Courier New'
+        Font.Style = []
+        GridLineWidth = 0
+        ParentFont = False
+        ScrollBars = ssVertical
+        TabOrder = 1
+        Visible = False
+        OnDrawCell = sgdDatenDrawCell
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
@@ -109,7 +844,7 @@ object FormMain: TFormMain
         Left = 2
         Top = 15
         Width = 171
-        Height = 38
+        Height = 185
         Align = alClient
         Caption = ' TMCL Reply '
         TabOrder = 0
@@ -212,9 +947,9 @@ object FormMain: TFormMain
       end
       object sgdTMCL: TStringGrid
         Left = 2
-        Top = 53
+        Top = 200
         Width = 171
-        Height = 338
+        Height = 191
         Align = alBottom
         BorderStyle = bsNone
         ColCount = 2
@@ -359,608 +1094,6 @@ object FormMain: TFormMain
       end
     end
   end
-  object Panel2: TPanel
-    Left = 177
-    Top = 0
-    Width = 950
-    Height = 715
-    Align = alClient
-    Caption = 'Panel2'
-    TabOrder = 2
-    object JvChart1: TJvChart
-      Left = 1
-      Top = 540
-      Width = 643
-      Height = 174
-      Align = alClient
-      AutoSize = True
-      Options.XAxisValuesPerDivision = 0
-      Options.XAxisLabelAlignment = taLeftJustify
-      Options.XAxisDateTimeMode = False
-      Options.XOrigin = 0
-      Options.YOrigin = 0
-      Options.MarkerSize = 1
-      Options.PrimaryYAxis.YMax = 10.000000000000000000
-      Options.PrimaryYAxis.YLegendDecimalPlaces = 0
-      Options.SecondaryYAxis.YMax = 10.000000000000000000
-      Options.SecondaryYAxis.YLegendDecimalPlaces = 0
-      Options.MouseEdit = False
-      Options.MouseDragObjects = False
-      Options.LegendRowCount = 0
-      Options.AxisLineWidth = 1
-      Options.HeaderFont.Charset = DEFAULT_CHARSET
-      Options.HeaderFont.Color = clWindowText
-      Options.HeaderFont.Height = -11
-      Options.HeaderFont.Name = 'MS Sans Serif'
-      Options.HeaderFont.Style = []
-      Options.LegendFont.Charset = DEFAULT_CHARSET
-      Options.LegendFont.Color = clWindowText
-      Options.LegendFont.Height = -11
-      Options.LegendFont.Name = 'MS Sans Serif'
-      Options.LegendFont.Style = []
-      Options.AxisFont.Charset = DEFAULT_CHARSET
-      Options.AxisFont.Color = clWindowText
-      Options.AxisFont.Height = -11
-      Options.AxisFont.Name = 'MS Sans Serif'
-      Options.AxisFont.Style = []
-      Options.PaperColor = clWhite
-      Options.AxisLineColor = clBlack
-      Options.CursorColor = clBlack
-      Options.CursorStyle = psSolid
-    end
-    object Splitter1: TSplitter
-      Left = 1
-      Top = 537
-      Width = 948
-      Height = 3
-      Cursor = crVSplit
-      Align = alTop
-    end
-    object Splitter2: TSplitter
-      Left = 946
-      Top = 540
-      Height = 174
-      Align = alRight
-    end
-    object GroupBox3: TGroupBox
-      Left = 1
-      Top = 1
-      Width = 948
-      Height = 432
-      Align = alTop
-      Caption = 'Parameter'
-      TabOrder = 0
-      DesignSize = (
-        948
-        432)
-      object Label11: TLabel
-        Left = 12
-        Top = 332
-        Width = 31
-        Height = 13
-        Caption = 'Speed'
-      end
-      object lblLinks: TLabel
-        Left = 12
-        Top = 311
-        Width = 70
-        Height = 13
-        Caption = 'Endpunkt links'
-      end
-      object lblRechts: TLabel
-        Left = 12
-        Top = 290
-        Width = 78
-        Height = 13
-        Caption = 'Endpunkt rechts'
-      end
-      object Label8: TLabel
-        Left = 12
-        Top = 268
-        Width = 37
-        Height = 13
-        Caption = 'Counter'
-      end
-      object Label13: TLabel
-        Left = 64
-        Top = 24
-        Width = 22
-        Height = 13
-        Caption = 'Feile'
-      end
-      object Label15: TLabel
-        Left = 40
-        Top = 48
-        Width = 50
-        Height = 13
-        Caption = 'ISO Gr'#246#223'e'
-      end
-      object Label17: TLabel
-        Left = 56
-        Top = 72
-        Width = 30
-        Height = 13
-        Caption = 'L'#228'nge'
-      end
-      object lblMittelwert: TLabel
-        Left = 308
-        Top = 271
-        Width = 45
-        Height = 13
-        Caption = 'Mittelwert'
-      end
-      object lblKraft: TLabel
-        Left = 56
-        Top = 96
-        Width = 22
-        Height = 13
-        Caption = 'Kraft'
-      end
-      object lblSteri: TLabel
-        Left = 24
-        Top = 208
-        Width = 103
-        Height = 13
-        Caption = 'Sterilisationsvorg'#228'nge'
-      end
-      object lblGrenzwert: TLabel
-        Left = 308
-        Top = 338
-        Width = 48
-        Height = 13
-        Caption = 'Grenzwert'
-      end
-      object Image1: TImage
-        Left = 864
-        Top = 16
-        Width = 105
-        Height = 105
-      end
-      object lblPosition: TLabel
-        Left = 308
-        Top = 360
-        Width = 50
-        Height = 13
-        Caption = 'Position ['#176']'
-      end
-      object Label10: TLabel
-        Left = 308
-        Top = 314
-        Width = 78
-        Height = 13
-        Caption = 'Geschwindigkeit'
-      end
-      object Label18: TLabel
-        Left = 308
-        Top = 293
-        Width = 51
-        Height = 13
-        Caption = 'Microsteps'
-      end
-      object Label7: TLabel
-        Left = 24
-        Top = 120
-        Width = 69
-        Height = 13
-        Caption = 'Abscherwinkel'
-      end
-      object Label20: TLabel
-        Left = 24
-        Top = 152
-        Width = 64
-        Height = 13
-        Caption = 'Einspanntiefe'
-      end
-      object Label21: TLabel
-        Left = 24
-        Top = 168
-        Width = 54
-        Height = 13
-        Caption = 'Temperatur'
-      end
-      object counter: TStaticText
-        Left = 161
-        Top = 266
-        Width = 10
-        Height = 17
-        BorderStyle = sbsSunken
-        Caption = '0'
-        TabOrder = 0
-      end
-      object ResetButton: TButton
-        Left = 312
-        Top = 122
-        Width = 113
-        Height = 21
-        Caption = 'Reset Counter'
-        Enabled = False
-        TabOrder = 1
-      end
-      object Stop: TButton
-        Left = 846
-        Top = 330
-        Width = 89
-        Height = 25
-        Anchors = [akRight, akBottom]
-        Caption = 'Stop'
-        TabOrder = 2
-        OnClick = StopClick
-      end
-      object startButton: TButton
-        Left = 750
-        Top = 330
-        Width = 89
-        Height = 25
-        Anchors = [akRight, akBottom]
-        Caption = 'Start'
-        TabOrder = 3
-        OnClick = startButtonClick
-      end
-      object speed: TSpinEdit
-        Left = 122
-        Top = 330
-        Width = 49
-        Height = 22
-        MaxValue = 0
-        MinValue = 0
-        TabOrder = 4
-        Value = 0
-      end
-      object leftSpin: TSpinEdit
-        Left = 122
-        Top = 308
-        Width = 49
-        Height = 22
-        MaxValue = 0
-        MinValue = 0
-        TabOrder = 5
-        Value = 0
-      end
-      object rightSpin: TSpinEdit
-        Left = 122
-        Top = 287
-        Width = 49
-        Height = 22
-        MaxValue = 0
-        MinValue = 0
-        TabOrder = 6
-        Value = 0
-      end
-      object cbxFeile: TComboBox
-        Left = 104
-        Top = 16
-        Width = 145
-        Height = 21
-        Enabled = False
-        ItemHeight = 13
-        TabOrder = 7
-        Text = '---'
-      end
-      object btnFeileLaden: TButton
-        Left = 312
-        Top = 16
-        Width = 65
-        Height = 21
-        Caption = 'laden ...'
-        TabOrder = 8
-        OnClick = btnFeileLadenClick
-      end
-      object btnFeileBearbeiten: TButton
-        Left = 384
-        Top = 16
-        Width = 81
-        Height = 21
-        Caption = 'bearbeiten ...'
-        Enabled = False
-        TabOrder = 9
-        OnClick = btnFeileBearbeitenClick
-      end
-      object btnFeileNeu: TButton
-        Left = 256
-        Top = 16
-        Width = 49
-        Height = 21
-        Caption = 'neu ...'
-        TabOrder = 10
-        OnClick = btnFeileNeuClick
-      end
-      object cbxISO: TComboBox
-        Left = 104
-        Top = 40
-        Width = 145
-        Height = 21
-        ItemHeight = 13
-        TabOrder = 11
-        Text = '---'
-        Items.Strings = (
-          '6'
-          '8'
-          '10'
-          '15'
-          '20'
-          '25'
-          '30'
-          '35'
-          '40'
-          '45'
-          '50'
-          '55'
-          '60'
-          '70'
-          '80'
-          '90'
-          '100')
-      end
-      object medtLaenge: TMaskEdit
-        Left = 104
-        Top = 64
-        Width = 143
-        Height = 21
-        EditMask = '990.99;1;_'
-        MaxLength = 6
-        TabOrder = 12
-        Text = '000.00'
-      end
-      object stxtMW: TStaticText
-        Left = 457
-        Top = 266
-        Width = 10
-        Height = 17
-        BorderStyle = sbsSunken
-        Caption = '0'
-        TabOrder = 13
-      end
-      object btnWerteSpeichern: TButton
-        Left = 748
-        Top = 360
-        Width = 187
-        Height = 25
-        Anchors = [akRight, akBottom]
-        Caption = 'Werte in Tabelle '#252'bernehmen'
-        TabOrder = 14
-        OnClick = btnWerteSpeichernClick
-      end
-      object stxtMSteps: TStaticText
-        Left = 457
-        Top = 287
-        Width = 10
-        Height = 17
-        BorderStyle = sbsSunken
-        Caption = '0'
-        TabOrder = 15
-      end
-      object stxtVelocity: TStaticText
-        Left = 457
-        Top = 309
-        Width = 10
-        Height = 17
-        BorderStyle = sbsSunken
-        Caption = '0'
-        TabOrder = 16
-      end
-      object medtKraft: TMaskEdit
-        Left = 104
-        Top = 88
-        Width = 143
-        Height = 21
-        EditMask = '990.99;1;_'
-        MaxLength = 6
-        TabOrder = 17
-        Text = '000.00'
-      end
-      object spinSteri: TSpinEdit
-        Left = 168
-        Top = 202
-        Width = 49
-        Height = 22
-        MaxValue = 0
-        MinValue = 0
-        TabOrder = 18
-        Value = 0
-      end
-      object sedtGrenzwert: TSpinEdit
-        Left = 418
-        Top = 335
-        Width = 49
-        Height = 22
-        MaxValue = 0
-        MinValue = 0
-        TabOrder = 19
-        Value = 50
-      end
-      object stxtPosition: TStaticText
-        Left = 457
-        Top = 357
-        Width = 10
-        Height = 17
-        BorderStyle = sbsSunken
-        Caption = '0'
-        TabOrder = 20
-      end
-      object cbxRechts: TCheckBox
-        Left = 176
-        Top = 288
-        Width = 97
-        Height = 17
-        Caption = 'Dauerlauf rechts'
-        TabOrder = 21
-        OnClick = cbxRechtsClick
-      end
-      object cbxLinks: TCheckBox
-        Left = 176
-        Top = 312
-        Width = 97
-        Height = 17
-        Caption = 'Dauerlauf links'
-        TabOrder = 22
-        OnClick = cbxLinksClick
-      end
-      object MediaPlayer1: TMediaPlayer
-        Left = 512
-        Top = 384
-        Width = 253
-        Height = 30
-        FileName = 
-          'C:\Dokumente und Einstellungen\Yannick\Desktop\Feilentester\feil' +
-          'ekaputt.wav'
-        Visible = False
-        TabOrder = 23
-      end
-      object btnLaser: TButton
-        Left = 748
-        Top = 392
-        Width = 185
-        Height = 25
-        Anchors = [akRight, akBottom]
-        Caption = 'LASER an'
-        TabOrder = 24
-        OnClick = btnLaserClick
-      end
-      object medtTiefe: TMaskEdit
-        Left = 104
-        Top = 144
-        Width = 143
-        Height = 21
-        EditMask = '990.99;1;_'
-        MaxLength = 6
-        TabOrder = 25
-        Text = '000.00'
-      end
-      object medtTemperatur: TMaskEdit
-        Left = 104
-        Top = 168
-        Width = 143
-        Height = 21
-        EditMask = '990.99;1;_'
-        MaxLength = 6
-        TabOrder = 26
-        Text = '000.00'
-      end
-      object cbxWarnton: TCheckBox
-        Left = 748
-        Top = 280
-        Width = 185
-        Height = 17
-        Anchors = [akRight, akBottom]
-        Caption = 'Warnton bei Feilenbruch'
-        Checked = True
-        State = cbChecked
-        TabOrder = 27
-      end
-      object test_CheckBox: TCheckBox
-        Left = 616
-        Top = 16
-        Width = 113
-        Height = 17
-        Caption = 'Test Connection'
-        TabOrder = 28
-      end
-      object medtWinkel: TMaskEdit
-        Left = 104
-        Top = 120
-        Width = 143
-        Height = 21
-        EditMask = '990.99;1;_'
-        MaxLength = 6
-        TabOrder = 29
-        Text = '000.00'
-      end
-      object cbxWarntonTimer: TCheckBox
-        Left = 748
-        Top = 304
-        Width = 185
-        Height = 17
-        Anchors = [akRight, akBottom]
-        Caption = 'Warnton automatisch Abschalten'
-        Checked = True
-        State = cbChecked
-        TabOrder = 30
-      end
-    end
-    object sgdDaten: TStringGrid
-      Left = 1
-      Top = 433
-      Width = 948
-      Height = 104
-      Align = alTop
-      BorderStyle = bsNone
-      ColCount = 16
-      DefaultRowHeight = 18
-      FixedCols = 0
-      RowCount = 2
-      ScrollBars = ssHorizontal
-      TabOrder = 1
-      OnDrawCell = sgdDatenDrawCell
-      ColWidths = (
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64
-        64)
-    end
-    object Panel3: TPanel
-      Left = 644
-      Top = 540
-      Width = 302
-      Height = 174
-      Align = alRight
-      Caption = 'Panel3'
-      TabOrder = 2
-      object Memo1: TMemo
-        Left = 1
-        Top = 339
-        Width = 300
-        Height = 60
-        Align = alClient
-        BevelInner = bvNone
-        BorderStyle = bsNone
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        Lines.Strings = (
-          'Memo1')
-        ParentFont = False
-        TabOrder = 0
-      end
-      object sgdDetails: TStringGrid
-        Left = 1
-        Top = 1
-        Width = 300
-        Height = 338
-        Align = alTop
-        BorderStyle = bsNone
-        ColCount = 7
-        DefaultColWidth = 50
-        DefaultRowHeight = 18
-        DragMode = dmAutomatic
-        FixedCols = 0
-        RowCount = 2
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        GridLineWidth = 0
-        ParentFont = False
-        ScrollBars = ssVertical
-        TabOrder = 1
-        OnDrawCell = sgdDatenDrawCell
-      end
-    end
-  end
   object Comm32: TComm32
     DeviceName = 'COM2'
     MonitorEvents = [evRxChar]
@@ -968,22 +1101,22 @@ object FormMain: TFormMain
     Options = []
     OnRxChar = Comm32RxChar
     Simple = False
-    Left = 632
-    Top = 384
+    Left = 816
+    Top = 104
   end
   object Timer3: TTimer
     Interval = 1
     OnTimer = Timer3Timer
-    Left = 600
-    Top = 388
+    Left = 784
+    Top = 100
   end
   object OpenDlgFeile: TOpenDialog
     Left = 546
     Top = 42
   end
   object MainMenu1: TMainMenu
-    Left = 569
-    Top = 384
+    Left = 753
+    Top = 96
     object Daten1: TMenuItem
       Caption = 'Daten'
       object ffnen1: TMenuItem
@@ -1009,8 +1142,8 @@ object FormMain: TFormMain
     Enabled = False
     Interval = 1
     OnTimer = tmrMessungTimer
-    Left = 663
-    Top = 385
+    Left = 847
+    Top = 105
   end
   object OpenDlgDaten: TOpenDialog
     Left = 138
@@ -1025,7 +1158,7 @@ object FormMain: TFormMain
   end
   object SaveDlgDetails: TSaveDialog
     Filter = 'Detailsdaten|*.ddt'
-    Left = 538
-    Top = 385
+    Left = 730
+    Top = 97
   end
 end
